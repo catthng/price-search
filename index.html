@@ -3,79 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Price Search</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 20px;
-        }
-        table {
-            width: 100%;
-            max-width: 800px;
-            margin: 20px auto;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid black;
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #f4f4f4;
-        }
-        button {
-            padding: 10px 15px;
-            font-size: 16px;
-            margin: 10px;
-            cursor: pointer;
-        }
-    </style>
+    <title>Price Lists</title>
+    <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
-
-    <h1>Price Search</h1>
-    <button onclick="fetchData()">Refresh Data</button>
-    <div id="data-container">Loading data...</div>
-
-    <script>
-        async function fetchData() {
-            const sheetURL = "https://docs.google.com/spreadsheets/d/1hCqLjZ8KcOV8sR9Q65mltuUwYLcuGmKsuN2HZz5Ig1o/gviz/tq?tqx=out:json";
-
-            try {
-                const response = await fetch(sheetURL);
-                const text = await response.text();
-                const json = JSON.parse(text.substring(47, text.length - 2)); // Clean Google Sheets response
-
-                const rows = json.table.rows;
-                let tableHTML = "<table><tr><th>Item Name</th><th>Item Code</th><th>Barcode</th><th>Retail Price</th><th>Net Price</th></tr>";
-
-                rows.forEach(row => {
-                    const barcode = row.c[0]?.v || "";
-                    const itemCode = row.c[1]?.v || "";
-                    const itemName = row.c[2]?.v || "";
-
-                    // Format price (add thousands separator, no decimals)
-                    const formatPrice = (price) => {
-                        return price ? Number(price).toLocaleString("en-US", { maximumFractionDigits: 0 }) : "-";
-                    };
-
-                    const retailPrice = formatPrice(row.c[3]?.v);
-                    const netPrice = formatPrice(row.c[5]?.v);
-
-                    tableHTML += `<tr><td>${itemName}</td><td>${itemCode}</td><td>${barcode}</td><td>${retailPrice}</td><td>${netPrice}</td></tr>`;
-                });
-
-                tableHTML += "</table>";
-                document.getElementById("data-container").innerHTML = tableHTML;
-            } catch (error) {
-                console.error("Error fetching data:", error);
-                document.getElementById("data-container").innerHTML = "Failed to load data.";
-            }
-        }
-
-        window.onload = fetchData; // Fetch data when the page loads
-    </script>
-
+    <h1>Select a Price List</h1>
+    <ul>
+        <li><a href="pages/pricelist-a.html">Price List A</a></li>
+        <li><a href="pages/pricelist-b.html">Price List B</a></li>
+        <li><a href="pages/pricelist-c.html">Price List C</a></li>
+    </ul>
 </body>
 </html>
