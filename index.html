@@ -5,8 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Price Search</title>
 </head>
+<script>
+    async function fetchData() {
+        const sheetURL = "https://docs.google.com/spreadsheets/d/1hCqLjZ8KcOV8sR9Q65mltuUwYLcuGmKsuN2HZz5Ig1o/gviz/tq?tqx=out:json";
+        
+        try {
+            const response = await fetch(sheetURL);
+            const text = await response.text();
+            const json = JSON.parse(text.substring(47, text.length - 2)); // Google Sheets returns weird formatting
+
+            const rows = json.table.rows;
+            let tableHTML = "<table border='1'><tr><th>Item Name</th><th>Item Code</th><th>Barcode</th><th>Retail Price</th><th>Net Price</th></tr>";
+
+            rows.forEach(row => {
+                const barcode = row.c[0]?.v || "";
+                const itemCode = row.c[1]?.v || "";
+                const itemName = row.c[2]?.v || "";
+                const retailPrice = row.c[3]?.v || "";
+                const netPrice = row.c[5]?.v || "";
+
+                tableHTML += `<tr><td>${itemName}</td><td>${itemCode}</td><td>${barcode}</td><td>${retailPrice}</td><td>${netPrice}</td></tr>`;
+            });
+
+            tableHTML += "</table>";
+            document.getElementById("data-container").innerHTML = tableHTML;
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    }
+
+    window.onload = fetchData; // Load data when the page loads
+</script>
 <body>
     <h1>Welcome to Price Search!</h1>
     <p>This is your first deployment.</p>
+    <button onclick="fetchData()">Refresh Data</button>
+    <div id="data-container">Loading data...</div>
 </body>
 </html>
