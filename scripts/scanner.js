@@ -1,34 +1,52 @@
-document.getElementById("scanButton").addEventListener("click", openCamera);
+document.getElementById("scanButton").addEventListener("click", openScanner);
 
-async function openCamera() {
-    const videoElement = document.getElementById("scanner");
+function openScanner() {
     const scannerContainer = document.getElementById("scanner-container");
-
     scannerContainer.classList.remove("hidden"); // Show scanner
-
-    try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-            video: { facingMode: "environment" } // Force back camera
-        });
-        videoElement.srcObject = stream;
-    } catch (error) {
-        console.error("Camera error:", error);
-        alert("Failed to access camera: " + error.message);
-    }
+    startScanner();
 }
 
-function closeCamera() {
-    const videoElement = document.getElementById("scanner");
+function closeScanner() {
     const scannerContainer = document.getElementById("scanner-container");
-
     scannerContainer.classList.add("hidden"); // Hide scanner
-
-    if (videoElement.srcObject) {
-        let tracks = videoElement.srcObject.getTracks();
-        tracks.forEach(track => track.stop()); // Stop camera stream
-        videoElement.srcObject = null;
-    }
+    Quagga.stop();
 }
 
-document.getElementById("scanButton").addEventListener("click", openCamera);
-document.querySelector("#scanner-container button").addEventListener("click", closeCamera);
+function startScanner() {
+    Quagga.init({
+        inputStream: {
+            type: "LiveStream",
+            constraints: {
+                facingMode: { ideal: "environment" }, // Use back camera
+                width: { ideal: 640 },
+                height: { ideal: 480 }
+            },
+            target: document.querySelector("#scanner")
+        },
+        decoder: {
+            readers: ["ean_reader", "code_128_reader"] // Supports multiple barcode types
+        }
+    }, function (err) {
+        if (err) {
+            console.error("QuaggaJS initialization error:", err);
+            alert("Error initializing camera. Please check browser permissions.");
+            closeScanner();
+            return;
+        }
+        Quagga.start();
+    });
+
+    Quagga.onProcessed(function (result) {
+        if (result) {
+            console.log("Processing frame...");
+        }
+    });
+
+    Quagga.onDetected(function (result) {
+        const scannedCode = result.codeResult.code;
+        console.log("Scanned barcode:", scannedCode);
+        document.getElementById("searchBox").value = scannedCode;
+        filterResults(); // Trigger search
+        closeScanner(); // Close camera after scan
+    });
+}
