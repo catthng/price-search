@@ -7,7 +7,7 @@
 </head>
 <script>
     async function fetchData() {
-        const sheetURL = "https://docs.google.com/spreadsheets/d/1hCqLjZ8KcOV8sR9Q65mltuUwYLcuGmKsuN2HZz5Ig1o/gviz/tq?tqx=out:json";
+        const sheetURL = "https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/gviz/tq?tqx=out:json";
         
         try {
             const response = await fetch(sheetURL);
@@ -21,8 +21,14 @@
                 const barcode = row.c[0]?.v || "";
                 const itemCode = row.c[1]?.v || "";
                 const itemName = row.c[2]?.v || "";
-                const retailPrice = row.c[3]?.v || "";
-                const netPrice = row.c[5]?.v || "";
+
+                // Format price: Remove decimals, add thousand separators
+                const formatPrice = (price) => {
+                    return price ? Number(price).toLocaleString("en-US", { maximumFractionDigits: 0 }) : "-";
+                };
+
+                const retailPrice = formatPrice(row.c[3]?.v);
+                const netPrice = formatPrice(row.c[5]?.v);
 
                 tableHTML += `<tr><td>${itemName}</td><td>${itemCode}</td><td>${barcode}</td><td>${retailPrice}</td><td>${netPrice}</td></tr>`;
             });
@@ -33,7 +39,7 @@
             console.error("Error fetching data:", error);
         }
     }
-
+    
     window.onload = fetchData; // Load data when the page loads
 </script>
 <body>
