@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Price List AB</title>
+    <title>Price List A</title>
     <link rel="stylesheet" href="../styles/styles.css">
 </head>
 <body>
 
-    <h1>Price List AC</h1>
+    <h1>Price List A</h1>
     <div class="search-container">
         <input type="text" id="searchBox" placeholder="Search by Item Name or Item Code..." oninput="filterResults()">
         <button id="scanButton">📸 Scan</button>
@@ -21,10 +21,11 @@
 
     <div id="data-container"></div> <!-- Starts empty -->
 
-    <script src="../scripts/quagga.min.js"></script> <!-- Barcode Scanner -->
+    <!-- Load ZXing.JS from CDN -->
+    <script src="https://unpkg.com/@zxing/library@0.19.2/esm/index.js"></script>
+    <script src="../scripts/scanner.js"></script>
     <script src="../scripts/fetch-data.js"></script>
     <script src="../scripts/search.js"></script>
-    <script src="../scripts/scanner.js"></script>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
