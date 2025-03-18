@@ -1,0 +1,47 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 10px;
+    background-color: #f8f8f8;
+}
+input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 16px;
+}
+button {
+    padding: 10px 15px;
+    font-size: 16px;
+    margin: 10px;
+    cursor: pointer;
+}
+.item-card {
+    background: white;
+    padding: 10px;
+    margin: 10px 5px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    text-align: left;
+}
+.item-name {
+    font-size: 18px;
+    font-weight: bold;
+}
+.row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #555;
+}
+.price {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+.retail-price {
+    color: red;
+}
+.net-price {
+    color: green;
+}
