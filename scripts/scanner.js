@@ -10,8 +10,8 @@ async function openScanner() {
     const videoElement = document.getElementById("scanner");
 
     try {
-        const { BrowserMultiFormatReader } = await import("https://unpkg.com/@zxing/library@0.19.2/esm/index.js");
-        const codeReader = new BrowserMultiFormatReader();
+        const ZXing = await import("../scripts/zxing.min.js");
+        const codeReader = new ZXing.BrowserMultiFormatReader();
         
         videoStream = await navigator.mediaDevices.getUserMedia({
             video: { facingMode: "environment" } // Use back camera
