@@ -19,9 +19,15 @@ function startScanner() {
         inputStream: {
             type: "LiveStream",
             constraints: {
-                width: 400,
-                height: 300,
-                facingMode: "environment" // Use back camera
+                facingMode: { exact: "environment" }, // Force back camera
+                width: { ideal: 640 },  // Adjust for better performance
+                height: { ideal: 480 }
+            },
+            area: { // Reduce scan area for better performance
+                top: "20%",
+                right: "10%",
+                left: "10%",
+                bottom: "20%"
             },
             target: document.querySelector("#scanner")
         },
@@ -30,7 +36,9 @@ function startScanner() {
         }
     }, function (err) {
         if (err) {
-            console.error("QuaggaJS error:", err);
+            console.error("QuaggaJS initialization error:", err);
+            alert("Error initializing camera. Please check browser permissions.");
+            closeScanner();
             return;
         }
         Quagga.start();
