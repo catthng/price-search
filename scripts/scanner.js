@@ -1,4 +1,6 @@
-document.getElementById("scanButton").addEventListener("click", openScanner);
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("scanButton").addEventListener("click", openScanner);
+});
 
 function openScanner() {
     const scannerContainer = document.getElementById("scanner-container");
@@ -26,7 +28,7 @@ function startScanner() {
         decoder: {
             readers: ["ean_reader", "code_128_reader"] // Supports multiple barcode types
         }
-    }, function(err) {
+    }, function (err) {
         if (err) {
             console.error("QuaggaJS error:", err);
             return;
@@ -34,7 +36,7 @@ function startScanner() {
         Quagga.start();
     });
 
-    Quagga.onDetected(function(result) {
+    Quagga.onDetected(function (result) {
         const scannedCode = result.codeResult.code;
         console.log("Scanned barcode:", scannedCode);
 
