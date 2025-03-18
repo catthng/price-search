@@ -10,9 +10,9 @@ function filterResults() {
     const filteredItems = allItems.filter(item => 
         item.itemName.toLowerCase().includes(query) || 
         item.itemCode.toLowerCase().includes(query)
-    ).slice(0, 20); // Limit results to 20 items
+    );
 
-    displayItems(filteredItems);
+    displayItems(filteredItems.slice(0, 20)); // Limit to 20 results
 }
 
 function displayItems(items) {
@@ -24,17 +24,21 @@ function displayItems(items) {
         return;
     }
 
+    const fragment = document.createDocumentFragment(); // Faster DOM updates
+
     items.forEach(item => {
-        const itemHTML = `
-            <div class="item-card">
-                <div class="item-name">${item.itemName}</div>
-                <div class="row"><span>Item Code: ${item.itemCode}</span></div>
-                <div class="row price">
-                    <span class="retail-price">Retail: ${item.retailPrice}</span>
-                    <span class="net-price">Discounted: ${item.netPrice}</span>
-                </div>
+        const itemDiv = document.createElement("div");
+        itemDiv.classList.add("item-card");
+        itemDiv.innerHTML = `
+            <div class="item-name">${item.itemName}</div>
+            <div class="row"><span>Item Code: ${item.itemCode}</span></div>
+            <div class="row price">
+                <span class="retail-price">Retail: ${item.retailPrice}</span>
+                <span class="net-price">Discounted: ${item.netPrice}</span>
             </div>
         `;
-        container.innerHTML += itemHTML;
+        fragment.appendChild(itemDiv);
     });
+
+    container.appendChild(fragment);
 }

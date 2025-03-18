@@ -7,11 +7,22 @@
     <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
+
     <h1>Select a Price List</h1>
+    <button onclick="refreshAllData()">Refresh Data</button>
     <ul>
         <li><a href="pages/pricelist-a.html">Price List A</a></li>
         <li><a href="pages/pricelist-b.html">Price List B</a></li>
         <li><a href="pages/pricelist-c.html">Price List C</a></li>
     </ul>
+
+    <script src="scripts/fetch-data.js"></script>
+    <script>
+        function refreshAllData() {
+            console.log("Refreshing all price lists...");
+            fetchData('1hCqLjZ8KcOV8sR9Q65mltuUwYLcuGmKsuN2HZz5Ig1o');
+        }
+    </script>
+
 </body>
 </html>
