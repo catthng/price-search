@@ -4,16 +4,20 @@ body {
     margin: 10px;
     background-color: #f8f8f8;
 }
+.search-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
 input {
-    width: 90%;
+    width: 75%;
     padding: 10px;
-    margin: 10px 0;
     font-size: 16px;
 }
 button {
-    padding: 10px 15px;
+    padding: 10px;
     font-size: 16px;
-    margin: 10px;
     cursor: pointer;
 }
 .item-card {
@@ -24,24 +28,26 @@ button {
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
     text-align: left;
 }
-.item-name {
-    font-size: 18px;
-    font-weight: bold;
+.hidden {
+    display: none;
 }
-.row {
-    display: flex;
-    justify-content: space-between;
-    font-size: 14px;
-    color: #555;
+#scanner-container {
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 200px;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
 }
-.price {
-    font-size: 16px;
-    font-weight: bold;
-    color: #333;
+.hidden {
+    display: none;
 }
-.retail-price {
-    color: red;
-}
-.net-price {
-    color: green;
+video {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
 }
